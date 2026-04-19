@@ -1,0 +1,420 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 38 22% 97%;
+    --foreground: 220 18% 13%;
+
+    --card: 38 18% 96%;
+    --card-foreground: 220 18% 13%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 18% 13%;
+
+    --primary: 152 38% 38%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 38 16% 93%;
+    --secondary-foreground: 220 15% 20%;
+
+    --muted: 38 12% 91%;
+    --muted-foreground: 220 8% 48%;
+
+    --accent: 152 28% 90%;
+    --accent-foreground: 152 38% 28%;
+
+    --destructive: 0 65% 52%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 38 12% 86%;
+    --input: 38 12% 86%;
+    --ring: 152 38% 38%;
+
+    --radius: 0.5rem;
+
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Source Sans 3', system-ui, sans-serif;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222 18% 8%;
+    --foreground: 38 10% 90%;
+    --card: 222 16% 11%;
+    --card-foreground: 38 10% 90%;
+    --popover: 222 16% 11%;
+    --popover-foreground: 38 10% 90%;
+    --primary: 152 38% 52%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 222 14% 16%;
+    --secondary-foreground: 38 10% 85%;
+    --muted: 222 14% 19%;
+    --muted-foreground: 220 8% 55%;
+    --accent: 152 22% 17%;
+    --accent-foreground: 152 38% 70%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 222 14% 21%;
+    --input: 222 14% 21%;
+    --ring: 152 38% 52%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+
+  /* Text selection */
+  ::selection {
+    background: hsl(152 38% 38% / 0.15);
+    color: hsl(152 38% 28%);
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
+  }
+}
+
+@layer components {
+  .prose-article {
+    @apply max-w-none;
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: hsl(var(--foreground));
+  }
+
+  .prose-article h1 {
+    font-family: var(--font-display);
+    @apply text-4xl font-bold mt-10 mb-4;
+  }
+
+  .prose-article h2 {
+    font-family: var(--font-display);
+    @apply text-2xl font-semibold mt-8 mb-3;
+  }
+
+  .prose-article p {
+    @apply mb-5;
+  }
+
+  .prose-article blockquote {
+    @apply border-l-4 border-primary pl-5 italic my-6 text-muted-foreground;
+  }
+
+  .prose-article code {
+    @apply bg-muted px-1.5 py-0.5 rounded text-sm;
+  }
+
+  .prose-article pre {
+    @apply bg-muted p-4 rounded-lg overflow-x-auto my-6;
+  }
+
+  .prose-article ul {
+    @apply list-disc pl-6 mb-5 space-y-1;
+  }
+
+  .prose-article ol {
+    @apply list-decimal pl-6 mb-5 space-y-1;
+  }
+
+  .prose-article img {
+    @apply rounded-lg my-6 w-full;
+  }
+
+  /* Editorial accent line */
+  .accent-line {
+    display: inline-block;
+    position: relative;
+  }
+  .accent-line::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: hsl(var(--primary) / 0.35);
+    border-radius: 2px;
+  }
+
+  /* Article card hover lift */
+  .card-lift {
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+  .card-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px hsl(var(--foreground) / 0.07);
+  }
+
+  /* Subtle left border accent on hover */
+  .border-hover-accent {
+    border-left: 2px solid transparent;
+    transition: border-color 0.2s ease, padding-left 0.2s ease;
+  }
+  .border-hover-accent:hover {
+    border-color: hsl(var(--primary));
+    padding-left: 12px;
+  }
+
+  /* Eyebrow label */
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: hsl(var(--primary));
+  }
+
+  /* Tag pill */
+  .tag-pill {
+    @apply rounded-full text-xs font-medium px-3 py-0.5;
+    background: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+    transition: background 0.15s ease;
+  }
+  .tag-pill:hover {
+    background: hsl(var(--primary) / 0.15);
+    color: hsl(var(--primary));
+  }
+}
+
+/* ─── Animations ──────────────────────────────────────────── */
+
+@keyframes blob {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(18px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 hsl(152 38% 38% / 0.3); }
+  70%  { box-shadow: 0 0 0 8px hsl(152 38% 38% / 0); }
+  100% { box-shadow: 0 0 0 0 hsl(152 38% 38% / 0); }
+}
+
+.animate-blob          { animation: blob 12s infinite; }
+.animation-delay-2000  { animation-delay: 2s; }
+.animation-delay-4000  { animation-delay: 4s; }
+
+.animate-slide-up      { animation: slide-up 0.55s ease-out both; }
+.animate-slide-up-d1   { animation: slide-up 0.55s 0.1s ease-out both; }
+.animate-slide-up-d2   { animation: slide-up 0.55s 0.2s ease-out both; }
+.animate-slide-up-d3   { animation: slide-up 0.55s 0.35s ease-out both; }
+.animate-slide-up-d4   { animation: slide-up 0.55s 0.5s ease-out both; }
+
+.animate-slide-right   { animation: slide-in-right 0.45s ease-out both; }
+
+/* Noise / grain overlay for body depth */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+}
+/* ─── Dark Mode Polish ────────────────────────────────────── */
+
+.dark body::before {
+  opacity: 0.04;
+}
+
+.dark ::selection {
+  background: hsl(152 38% 52% / 0.25);
+  color: hsl(152 38% 80%);
+}
+
+/* ─── Skeleton shimmer ────────────────────────────────────── */
+
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+
+.animate-pulse .bg-muted {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 25%,
+    hsl(var(--secondary)) 50%,
+    hsl(var(--muted)) 75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.6s infinite linear;
+}
+
+/* ─── Floating action bar ─────────────────────────────────── */
+
+.floating-bar {
+  background: hsl(var(--background) / 0.97);
+  border: 1px solid hsl(var(--border));
+  box-shadow:
+    0 4px 24px hsl(var(--foreground) / 0.08),
+    0 1px 4px hsl(var(--foreground) / 0.04);
+}
+
+/* ─── Heart pop animation ─────────────────────────────────── */
+
+@keyframes heart-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.4); }
+  70%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+.heart-pop {
+  animation: heart-pop 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+/* ─── Grid card hover ─────────────────────────────────────── */
+
+.grid-card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.grid-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px hsl(var(--foreground) / 0.09);
+}
+
+/* ─── Reading progress glow ───────────────────────────────── */
+
+@keyframes progress-glow {
+  0%, 100% { box-shadow: 0 0 6px hsl(var(--primary) / 0.4); }
+  50%       { box-shadow: 0 0 12px hsl(var(--primary) / 0.7); }
+}
+
+/* ─── Word cycle animation ────────────────────────────────── */
+
+@keyframes word-in {
+  from { opacity: 0; transform: translateY(14px) rotateX(-20deg); }
+  to   { opacity: 1; transform: translateY(0) rotateX(0); }
+}
+
+.word-cycle-enter {
+  animation: word-in 0.35s ease-out both;
+}
+
+/* ─── Feature card ────────────────────────────────────────── */
+
+.feature-card {
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px hsl(var(--primary) / 0.08);
+  border-color: hsl(var(--primary) / 0.3);
+}
+
+/* ─── CTA banner dark override ────────────────────────────── */
+
+.dark .cta-banner {
+  background: hsl(var(--card));
+}
+
+/* ─── Tag pill active pulse ───────────────────────────────── */
+
+@keyframes tag-select {
+  0%   { box-shadow: 0 0 0 0 hsl(var(--primary) / 0.4); }
+  70%  { box-shadow: 0 0 0 6px hsl(var(--primary) / 0); }
+  100% { box-shadow: 0 0 0 0 hsl(var(--primary) / 0); }
+}
+
+.tag-pill-active {
+  animation: tag-select 0.4s ease-out;
+}
+
+/* ─── View toggle ─────────────────────────────────────────── */
+
+.view-toggle-btn {
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+/* ─── Write preview fade ──────────────────────────────────── */
+
+@keyframes preview-in {
+  from { opacity: 0; transform: translateX(8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.animate-preview {
+  animation: preview-in 0.3s ease-out both;
+}
+
+/* ─── Scrollbar dark mode ─────────────────────────────────── */
+
+.dark ::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.4);
+}
+
+/* ─── Author card border glow ─────────────────────────────── */
+
+.author-card {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.author-card:hover {
+  border-color: hsl(var(--primary) / 0.3);
+  box-shadow: 0 4px 20px hsl(var(--primary) / 0.06);
+}
+
+/* ─── Write content completeness bar ─────────────────────── */
+
+.completeness-bar {
+  background: linear-gradient(90deg, hsl(var(--primary) / 0.3), hsl(var(--primary) / 0.6));
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}

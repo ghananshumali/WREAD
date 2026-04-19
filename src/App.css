@@ -1,0 +1,13 @@
+/**
+ * App.css — intentionally minimal.
+ * All design tokens, animations, and component styles live in src/index.css.
+ * This file is kept to satisfy the Vite entry point import in main.tsx.
+ */
+
+#root {
+  /* Allow full-width layouts — container centering is handled per-page */
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
