@@ -86,9 +86,12 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.5s ease-out forwards",
       },
+<<<<<<< HEAD
       scale: {
         "103": "1.03",
       },
+=======
+>>>>>>> d9d42a9ad3414c393c0c8b4164ef6c1c415a8baf
     },
   },
   plugins: [require("tailwindcss-animate")],
