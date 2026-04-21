@@ -30,6 +30,7 @@ const ArticlePage = () => {
   const postAuthorId = post?.author?._id || post?.userId?._id || post?.userId;
   const isOwner = Boolean(currentUser && post && String(currentUser._id) === String(postAuthorId));
   const progress = useReadingProgress();
+  const [summary, setSummary] = useState("");
 
   // Show floating bar after scrolling past hero header
   useEffect(() => {
@@ -158,6 +159,36 @@ const ArticlePage = () => {
   const authorName = post.author?.username || post.userId?.username || "Author";
   const authorInitial = authorName[0]?.toUpperCase();
   const authorId = post.author?._id || post.userId?._id || post.userId;
+
+const generateSummary = async () => {
+
+ try {
+
+  const res = await fetch(`${API_BASE}/ai/summary`, {
+
+   method: "POST",
+
+   headers: {
+    "Content-Type": "application/json"
+   },
+
+   body: JSON.stringify({
+    text: post.content
+   })
+
+  });
+
+  const data = await res.json();
+
+  setSummary(data.summary);
+
+ } catch(error){
+
+  console.log(error);
+
+ }
+
+};
 
   return (
     <div className="min-h-screen bg-background">
@@ -310,6 +341,42 @@ const ArticlePage = () => {
             alt={post.title}
             className="h-full w-full object-cover"
           />
+        </div>
+
+
+        {/* AI Summary */}
+        <div className="mb-10">
+
+          <div className="flex items-center justify-between mb-3">
+
+            <h3 className="text-sm font-semibold text-muted-foreground tracking-wide uppercase">
+              AI Summary
+            </h3>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={generateSummary}
+              className="rounded-full text-xs"
+            >
+              Generate summary
+            </Button>
+
+          </div>
+
+
+          {summary && (
+            <div className="rounded-xl border bg-card p-5 text-sm leading-relaxed shadow-sm">
+              {summary}
+            </div>
+          )}
+
+        </div>
+
+
+        {/* Content */}
+        <div className="prose-article whitespace-pre-line mb-12">
+          {post.content}
         </div>
 
         {/* Content */}
