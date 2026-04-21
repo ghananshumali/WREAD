@@ -1,6 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+dotenv.config({
+ path: "./.env"
+});
+console.log("ENV CHECK:", process.env.GROQ_API_KEY);
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes.js";
@@ -8,8 +12,8 @@ import postRoutes from "./routes/post.routes.js";
 import commentRoutes from "./routes/comment.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import { errorHandler, notFound } from "./middleware/error.js";
+import aiRoutes from "./routes/ai.js";
 
-dotenv.config();
 
 const app = express();
 
@@ -29,6 +33,7 @@ app.use("/api/auth",authRoutes);
 app.use("/api/post",postRoutes);
 app.use("/api/comment",commentRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/ai", aiRoutes);
 app.get("/", (req,res)=>{
     res.send("WREAD API running");
     });
